@@ -1,0 +1,274 @@
+<html>
+
+<head>
+    <title>Coursework 1: Web App with Vue.js</title>
+    <!-- <script src="https://unpkg.com/vue"></script> -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.18.0/axios.min.js"></script>
+    <script src="lib/validators.min.js"></script>
+    <script src="lib/vuelidate.min.js"></script>
+    <script src="subjects.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.2/css/all.min.css">
+</head>
+
+<body>
+    <div id="app">
+
+        <header>
+            <h1>{{ sitename }}</h1>
+            <button v-on:click='showCheckout'>
+                {{ cartItemCount }}
+                <span class="fas fa-cart-plus"></span> Checkout
+            </button>
+        </header>
+
+        <main>
+
+            <div v-if='showSubject'>
+                <div v-for="subject in sortedSubjects">
+                    <div style="margin: 2em;">
+                        <figure style="float: left;">
+                            <img v-bind:src="subject.image">
+                        </figure>
+                        <!-- <h2 v-text="subject.title"></h2> -->
+                        <p>Subject: {{ subject.title }}</p>
+                        <p>Location: {{ subject.location }}</p>
+                        <p>Price: {{ subject.price | formatPrice }}</p>
+                        <p>Spaces: {{ subject.spaces }}</p>
+                        <button v-on:click='addToCart(subject)' v-if='canAddToCart(subject)'>Add to Cart</button>
+                        <span v-if='subject.spaces === cartCount(subject.id)'>All out!</span>
+                        <span v-else-if="subject.spaces - cartCount(subject.id) < 5">
+                            Only {{ subject.spaces - cartCount(subject.id) }} left!
+                        </span>
+                        <span v-else>Buy Now!</span>
+                    <button disabled='disabled' v-else>Add to Cart</button>
+                
+                    </div>
+</div>
+            </div>
+            <div v-else>
+                <h2>Checkout</h2>
+
+                <form @submit.prevent="submitOrder" autocomplete="off">
+                    <div class="form-group">
+                        <strong for="name">Name:</strong>
+                        <input v-model.trim="order.name" @blur="$v.order.name.$touch()" :class="{error: shouldAppendErrorClass($v.order.name),
+                                valid: shouldAppendValidClass($v.order.name)}" id="name">
+                        <div v-if="$v.order.name.$error">
+                            <p v-if="$v.order.name.$error" class="error-message">The name field is required</p>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <strong for="phone">Phone:</strong>
+                        <input v-model.number="order.phone" @blur="$v.order.phone.$touch()" :class="{error: shouldAppendErrorClass($v.order.phone),
+                                valid: shouldAppendValidClass($v.order.phone)}" id="phone">
+                        <div v-if="$v.order.phone.$error">
+                            <p v-if="!$v.order.phone.required" class="error-message">The phone field is required</p>
+                            <p v-else-if="!$v.order.phone.integer" class="error-message">The phone field should be an
+                                integer</p>
+                        </div>
+                    </div>
+                    <!-- <p>
+                        <strong>Name:</strong>
+                        This input field is bound to 'Name' in the 'order' object
+                        <input v-model="order.name" type="text"/>
+                    <p v-if="!nameIsValid" class="error-message">This Field is Required</p>
+                    </p>
+                    <p>
+                        <strong>Phone:</strong>
+                        <input v-model.number="order.phone" type="number"/>
+                    <p v-if="!phoneIsValid" class="error-message">This Field is Required</p>
+                    </p>-->
+                    <!-- <p>
+                        <strong>Address:</strong>
+                        <input v-model="order.address" />
+                    </p>
+                    <p>
+                        <strong>Location:</strong>
+                        <select v-model="order.location">
+                            <option disabled>Location</option>
+                            <option v-for="(location, key) in locations" v-bind:value="location">
+                                {{location}}
+                            </option>
+                        </select>
+                    </p>
+                    <p>
+                        <strong>Zip / Postal Code:</strong>
+                        <input v-model.number="order.zip" type="number" />
+                    </p>
+
+                    <p><input type="checkbox" id="gift" value="true" v-model="order.gift"
+                            v-bind:true-value="order.sendGift" v-bind:false-value="order.dontSendGift">
+                        <label for="gift">Ship As Gift?</label></p>
+
+                    <p>
+                        <input type="radio" id="home" value="Home" v-model="order.method">
+                        <label for="home">Home</label>
+                        <input type="radio" id="business" value="Business" v-model="order.method">
+                        <label for="business">Business</label>
+                    </p> -->
+                </form>
+
+                <section>
+                    <h2>Order Information</h2>
+                    <p>Name: {{order.name}}</p>
+                    <p>Phone: {{order.phone}}</p>
+                    <!-- <p>Address: {{order.address}}</p>
+                    <p>Zip: {{order.zip}}</p>
+                    <p>Location: {{order.location}}</p>
+                    <p>Gift? {{order.gift}}</p>
+                    <p>Method: {{order.method}}</p> -->
+                </section>
+                <!-- <button v-on:click="submitOrder">Place Order</button> -->
+                <button :disabled="$v.order.$invalid" v-on:click="submitOrder">Place Order</button>
+
+
+            </div>
+
+        </main>
+    </div>
+
+    <script>
+        Vue.use(vuelidate.default)
+        var webstore = new Vue({
+            el: '#app',
+            data: {
+                sitename: 'Coursework 1 Web App with Vue js',
+                subjects: subjects,
+                cart: [],
+                showSubject: true,
+
+                order: {
+                    name: '',
+                    phone: '',
+                    // address: '',
+                    // zip: '',
+                    // location: '',
+                    // method: 'Home',
+                    // gift: 'Send as a gift',
+                    // sendGift: 'Send as a gift',
+                    // dontSendGift: 'Do not send as a gift'
+                },
+
+                // locations: {
+                //     LDN: 'London',
+                //     OXF: 'Oxford',
+                //     YK: 'York',
+                //     BZ: 'Bristol'
+                // }
+            },
+
+            validations: {
+                order: {
+                    name: {
+                        required: validators.required
+                    },
+
+                    phone: {
+                        required: validators.required, //$v.order.phone.required
+                        integer: validators.integer //$v.order.phone.interger
+                    }
+                }
+            },
+
+            computed: {
+                cartItemCount() {
+                    return this.cart.length;
+                },
+
+                sortedSubjects() {
+                    let subjectsArray = this.subjects.slice(0);
+
+                    function compare(a, b) {
+                        if (a.price > b.price)
+                            return 1;
+                        if (a.price < b.price)
+                            return -1;
+                        return 0;
+                    }
+                    return subjectsArray.sort(compare);
+                },
+
+            },
+
+            methods: {
+                addToCart(subject) {
+                    this.cart.push(subject.id);
+                },
+
+                showCheckout() {
+                    this.showSubject = this.showSubject ? false : true;
+                },
+
+                shouldAppendValidClass(field) {
+                    return !field.$invalid && field.$model && field.$dirty
+                },
+
+                shouldAppendErrorClass(field) {
+                    return field.$error
+                },
+
+                submitOrder() {
+                    this.$v.order.$touch()
+                    if (!this.$v.order.$invalid) {
+                        alert('📝 Order Submitted', this.order)
+                    } else {
+                        alert('❌ Invalid order. Check if name and phone have been inputed')
+                    }
+                },
+
+                canAddToCart(subject) {
+                    return subject.spaces > this.cartCount(subject.id);
+                },
+
+                cartCount(id) {
+                    let count = 0;
+                    for (let i = 0; i < this.cart.length; i++) {
+                        if (this.cart[i] === id) {
+                            count++;
+                        }
+                    }
+                    return count;
+                }
+
+                // const nameIsValid = !!this.order.name
+                // const phoneIsValid = typeof this.order.phone === 'number'
+                // const orderIsValid = this.nameIsValid && this.phoneIsValid
+
+                // if (this.orderIsValid) {
+                //     console.log('Order submitted!', this.order)
+                // } else {
+                //     console.log('Invalid order!', this.order)
+                // }
+
+                // alert('Order submitted!')
+            },
+
+            filters: {
+                formatPrice(price) { //#B
+                    if (!parseInt(price)) {
+                        return "";
+                    } //#C
+                    if (price > 99999) { //#D
+                        var priceString = (price / 100).toFixed(2); //#E
+                        var priceArray = priceString.split("").reverse(); //#F
+                        var index = 3; //#F
+                        while (priceArray.length > index + 3) { //#F
+                            priceArray.splice(index + 3, 0, ","); //#F
+                            index += 4; //#F
+                        } //#F
+                        return "£" + priceArray.reverse().join(""); //#G
+                    } else {
+                        return "£" + (price / 100).toFixed(2); //#H
+                    }
+                }
+            },
+        });
+
+    </script>
+
+</body>
+
+</html>
