@@ -135,3 +135,66 @@ input[type=checkbox]:checked:before {
     right: 10px;
 } */
 /* Style the sidebar - fixed full height */
+
+header h1{
+    padding: 10px 20px;
+}
+
+body {
+    max-width: 98%;
+}
+.cart {
+  padding: 20px 50px;
+}
+.boxes {
+  margin-top: 20px;
+}
+
+.verify {
+  margin-top: 20px;
+}
+
+.submit {
+  margin-top:20px;
+  float: right;
+}
+
+.pagecheckout {
+  padding: 20px 50px;
+}
+.description {
+  font-size: 150%;
+  margin-top:50px;
+}
+.sidebar {
+  height: 100%;
+  width: 160px;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  background-color: rgb(167, 164, 164);
+  overflow-x: hidden;
+  padding-top: 16px;
+}
+
+/* Style sidebar links */
+.sidebar a {
+  padding: 6px 8px 6px 16px;
+  text-decoration: none;
+  font-size: 20px;
+  color: #000000;
+  display: block;
+}
+
+/* Style links on mouse-over */
+.sidebar a:hover {
+  color: #f1f1f1;
+}
+
+/* Style the main content */
+.main {
+  margin-left: 60px;
+  /* Same as the width of the sidenav */
+  padding: 0px 10px;
+}
