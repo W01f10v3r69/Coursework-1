@@ -3,149 +3,110 @@
 @import url("https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.2/css/all.min.css");
 
 body {
-    width: 98%;
-    margin: 0 auto;
-    font-family: "Lato", sans-serif;
+  width: 98%;
+  margin: 0 auto;
+  font-family: "Lato", sans-serif;
 }
 
 input {
-    font-family: "Lato", sans-serif;
-    font-size: 0.875rem;
-    font-weight: 300;
-    color: #374853;
-    line-height: 2.375rem;
-    min-height: 2.375rem;
-    position: relative;
-    border: 1px solid #E8E8E8;
-    border-radius: 5px;
-    background: #fff;
-    padding: 0 0.8125rem;
-    width: 40%;
-    transition: border .1s ease;
-    box-sizing: border-box;
+  font-family: "Lato", sans-serif;
+  font-size: 0.875rem;
+  font-weight: 300;
+  color: #374853;
+  line-height: 2.375rem;
+  min-height: 2.375rem;
+  position: relative;
+  border: 1px solid #E8E8E8;
+  border-radius: 5px;
+  background: #fff;
+  padding: 0 0.8125rem;
+  width: 40%;
+  transition: border .1s ease;
+  box-sizing: border-box;
 }
 
 input.error,
 input.error:focus {
-    border-color: #f79483;
+  border-color: #f79483;
 }
 
 input.valid,
 input.valid:focus {
-    border-color: #41B883;
+  border-color: #4171b8;
 }
 
 input:focus {
-    border-color: #a8a8a8;
-    outline: none;
+  border-color: #a8a8a8;
+  outline: none;
 }
 
 label {
-    font-size: 0.8125rem;
-    color: #4b6372;
-    margin-bottom: 0.3125rem;
-    margin-left: 0.875rem;
-    display: block;
+  font-size: 0.8125rem;
+  color: #4b6372;
+  margin-bottom: 0.3125rem;
+  margin-left: 0.875rem;
+  display: block;
 }
 
 .form-group {
-    margin-bottom: 2rem;
+  margin-bottom: 2rem;
 }
 
 .error-message {
-    display: block;
-    color: #f57f6c;
+  display: block;
+  color: #f57f6c;
 }
 
 h1 {
-    color: #374853;
-}
-
-button {
-    font-family: "Lato", sans-serif;
-    font-size: 0.875rem;
-    font-weight: 300;
-    color: #fff;
-    min-height: 2.5rem;
-    line-height: 1.4;
-    padding: 0.5rem 1.875rem 0.625rem;
-    box-sizing: border-box;
-    position: relative;
-    display: inline-block;
-    background: #41B883;
-    border: none;
-    border-radius: 5px;
-    z-index: 1;
-    overflow: hidden;
-    outline: none;
-    vertical-align: middle;
-    transition: 0.1s background ease, 0.1s border-color ease, 0.1s color ease;
-    border-bottom: 3px solid #266d4d;
-    text-decoration: none;
-}
-
-button:hover,
-button:focus {
-    background: #349268;
-    cursor: pointer;
-}
-
-button:disabled {
-    background: #ccc6c6;
-    border-bottom: 3px solid #b3b1b1;
-    cursor: not-allowed;
+  color: #374853;
 }
 
 input[type=checkbox] {
-    visibility: hidden;
-    font-size: 1.33333333em;
-    line-height: .75em;
-    vertical-align: -10%;
-    position: relative;
-    left: 5px;
-    color: #555 !important;
-    font-weight: 200;
-    letter-spacing: 1px;
+  visibility: hidden;
+  font-size: 1.33333333em;
+  line-height: .75em;
+  vertical-align: -10%;
+  position: relative;
+  left: 5px;
+  color: #555 !important;
+  font-weight: 200;
+  letter-spacing: 1px;
 }
 
 
 input[type=checkbox]:before {
-    font-family: 'Font Awesome 5 Free' !important;
-    display: inline-block !important;
-    visibility: visible !important;
+  font-family: 'Font Awesome 5 Free' !important;
+  display: inline-block !important;
+  visibility: visible !important;
 }
 
 input[type=checkbox]:before {
-    font-weight: 400;
-    content: "\f0c8";
+  font-weight: 400;
+  content: "\f0c8";
 }
 
 input[type=checkbox]:checked:before {
-    font-weight: 900;
-    content: "\f14a";
+  font-weight: 900;
+  content: "\f14a";
 }
 
-/* .github-username {
-    position: relative;
-}
-
-.github-username .fa-spinner {
-    position: absolute;
-    top: 33px;
-    right: 10px;
-} */
-/* Style the sidebar - fixed full height */
-
-header h1{
-    padding: 10px 20px;
+header h1 {
+  padding: 10px 20px;
 }
 
 body {
-    max-width: 98%;
+  max-width: 98%;
 }
+
+.row {
+  max-width: 970px !important;
+  margin-left: 20%;
+}
+
 .cart {
   padding: 20px 50px;
 }
+
 .boxes {
   margin-top: 20px;
 }
@@ -155,46 +116,71 @@ body {
 }
 
 .submit {
-  margin-top:20px;
+  margin-top: 20px;
   float: right;
 }
 
 .pagecheckout {
   padding: 20px 50px;
 }
+
 .description {
   font-size: 150%;
-  margin-top:50px;
-}
-/* .sidebar {
-  height: 100%;
-  width: 160px;
-  position: fixed;
-  z-index: 1;
-  top: 0;
-  left: 0;
-  background-color: rgb(167, 164, 164);
-  overflow-x: hidden;
-  padding-top: 16px;
-} */
-
-/* Style sidebar links */
-/* .sidebar a {
-  padding: 6px 8px 6px 16px;
-  text-decoration: none;
-  font-size: 20px;
-  color: #000000;
-  display: block;
-} */
-
-/* Style links on mouse-over */
-.sidebar a:hover {
-  color: #f1f1f1;
+  margin-top: 50px;
 }
 
-/* Style the main content */
+.inventory-message {
+  margin-left: 20px;
+  font-weight: bold;
+  font-size: 120%;
+}
+
+
+.subject {
+  margin-top: 30px;
+  margin-left: 20px;
+  max-height: 300px;
+  max-width: 100%;
+}
+
+.figure {
+
+}
+
+.rating-active:before {
+  content: "\2605";
+  position: absolute;
+}
+
+.rating {
+  display: inline;
+  margin-left: 10px;
+  margin-top: 10px;
+  float: right;
+}
+
+.rating>span {
+  display: inline-block;
+  position: relative;
+  width: 1.1em;
+}
+
+@media (min-width: 1200px) {
+  .container {
+    max-width: 970px;
+  }
+}
+
 .main {
   margin-left: 60px;
   /* Same as the width of the sidenav */
   padding: 0px 10px;
+}
+
+.asc:after {
+  content: "\25B2"
+}
+
+.desc:after {
+  content: "\25BC"
 }
