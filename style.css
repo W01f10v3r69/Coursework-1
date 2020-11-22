@@ -1,29 +1,12 @@
 /* Styles are taken from https://github.com/monterail/vuelidate */
 @import url("http://use.fontawesome.com/releases/v5.0.1/css/all.css");
-/* @import url("https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.2/css/all.min.css"); */
+@import url("https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.2/css/all.min.css");
 
 body {
   width: 98%;
   margin: 0 auto;
   /* font-family: "Lato", sans-serif; */
 }
-
-/* input {
-  font-family: "Lato", sans-serif;
-  font-size: 0.875rem;
-  font-weight: 300;
-  color: #374853;
-  line-height: 2.375rem;
-  min-height: 2.375rem;
-  position: relative;
-  border: 1px solid #E8E8E8;
-  border-radius: 5px;
-  background: #fff;
-  padding: 0 0.8125rem;
-  width: 40%;
-  transition: border .1s ease;
-  box-sizing: border-box;
-} */
 
 input.error,
 input.error:focus {
@@ -144,24 +127,6 @@ header h1 {
 
 }
 
-/* .rating-active:before {
-  content: "\2605";
-  position: absolute;
-}
-
-.rating {
-  display: inline;
-  margin-left: 10px;
-  margin-top: 10px;
-  float: right;
-}
-
-.rating>span {
-  display: inline-block;
-  position: relative;
-  width: 1.1em;
-} */
-
 @media (min-width: 1200px) {
   .container {
     max-width: 970px;
@@ -203,21 +168,3 @@ header h1 {
     li {
       margin: 1rem 0;
     }
-/* .sort-orders a {
-  background: #337ab7;
-  color: #fff;
-  padding: 10px 14px;
-  margin: 0 10px 0 0;
-  border-radius: 2px;
-  cursor: pointer;
-}
-
-.sort-orders a:hover {
-  background: #2e6da4;
-  color: #fff;
-}
-
-.sort-orders a.active {
-  background: #1ea3d8;
-  color: #fff;
-} */
