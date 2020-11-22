@@ -11,7 +11,6 @@
     <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"> -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
         integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/1.0.11/vue.js"></script> -->
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.2/css/all.min.css">
 </head>
@@ -25,15 +24,32 @@
                     <h1>{{ sitename }}</h1>
                 </div>
                 <div class="nav navbar-nav navbar-right cart">
-                    <button v-if="!isHidden" type="button" class="btn btn-default btn-lg" v-on:click='showCheckout'>
+                    <button v-if="!isHidden" type="button" class="btn btn-default btn-lg" @click.stop="showCart = !showCart">
                         <span class="glyphicon glyphicon-shopping-cart">{{cartItemCount}}</span> Cart
                     </button>
+
+                    <div v-if="showCart" class="cart-dropdown">
+                        <ul class="cart-dropdown__list">
+                            <li :key="subject.id" v-for="(subject,index) in cart">
+                                <span>
+                                    {{ subject.title }} ({{ subject.quantity }})
+                                    <button class="btn btn-danger" v-on:click="removeItem(index);">
+                                        Remove
+                                    </button></span>
+                            </li>
+                            <li>
+                                <button class="btn btn-default btn-md" v-on:click='showCheckout'>
+                                    Checkout
+                                </button>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
             </div>
         </header>
 
         <main>
-            <div v-if='showSubject' class="column product">
+            <div v-if='showSubject' class="column subject">
                 <div class="sort-orders">
                     <span>Sort By
                         <button @click="sort('title')" v-bind:class="[sortBy === 'title' ? sortDirection : '']"
@@ -47,7 +63,7 @@
                     </span>
                 </div>
 
-                <div v-for="subject in sortedSubjects">
+                <div :key="subject.id" v-for="subject in sortedSubjects">
                     <div class="col-md-3 col-md-offset-1" style="margin: 2em;">
                         <figure style="float: left;">
                             <img class="card-img-top" v-bind:src="subject.image" alt="subject.title">
@@ -56,7 +72,7 @@
                         <p>Location: {{ subject.location }}</p>
                         <p>Price: {{ subject.price | formatPrice }}</p>
                         <p>Spaces: {{ subject.spaces }}</p>
-                        <button v-on:click="isHidden = false + addToCart(subject)" class=" btn btn-primary btn-md"
+                        <button :key="subject.id" v-on:click="isHidden = false + addToCart(subject)" class=" btn btn-primary btn-md"
                             v-if='canAddToCart(subject)'>Add to Cart</button>
                         <button class=" btn btn-primary btn-md" disabled='disabled' v-else>Add to Cart</button>
                         <span v-if='subject.spaces === cartCount(subject.id)'>All out!</span>
@@ -106,8 +122,7 @@
                                                     is required
                                                 </p>
                                                 <p v-else-if="!$v.order.phone.integer" class="error-message">The phone
-                                                    field should
-                                                    be an integer</p>
+                                                    field should be an integer</p>
                                             </div>
                                         </div>
                                     </div><!-- end of form-group -->
@@ -198,7 +213,8 @@
                 isHidden: true, //hides cart
                 cart: [],
                 showSubject: true,
-                sortBy: 'title',
+                showCart: false,
+                sortBy: '',
                 sortDirection: 'asc',
 
                 order: {
@@ -237,6 +253,7 @@
             },
 
             computed: {
+                
                 cartItemCount() {
                     return this.cart.length;
                 },
@@ -262,6 +279,9 @@
 
                 addToCart(subject) {
                     this.cart.push(subject.id);
+                },
+                removeItem: function (index) {
+                    this.cart.splice(index, 1);
                 },
 
                 showCheckout() {
